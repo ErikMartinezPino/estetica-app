@@ -6,7 +6,9 @@ import com.estetica.dto.ClienteDTO;
 import com.estetica.model.Cliente;
 
 /*
- * Esta es la clase que convierte de Entity a DTO y viceversa. Y eso es mapear
+ * Esta es la clase que convierte de Entity a DTO y viceversa. Y eso es mapear. Como
+ * queremos acceder a los datos de Cliente y ClienteDTO, en esas clases añadimos
+ * lombok y la anotacion @Data y ya tenemos los metodos get y set de todo.
  */
 
 @Component
