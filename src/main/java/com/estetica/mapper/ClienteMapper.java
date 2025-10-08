@@ -23,7 +23,7 @@ public class ClienteMapper {
         dto.setId(cliente.getId());
         dto.setNombre(cliente.getNombre());
         dto.setApellidos(cliente.getApellidos());
-        dto.setMovil(cliente.getMovil());
+        dto.setTelefono(cliente.getTelefono());
         dto.setEmail(cliente.getEmail());
         return dto;
     }
@@ -37,7 +37,7 @@ public class ClienteMapper {
         cliente.setId(dto.getId());
         cliente.setNombre(dto.getNombre());
         cliente.setApellidos(dto.getApellidos());
-        cliente.setMovil(dto.getMovil());
+        cliente.setTelefono(dto.getTelefono());
         cliente.setEmail(dto.getEmail());
         return cliente;
     }
