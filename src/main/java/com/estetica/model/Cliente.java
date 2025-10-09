@@ -4,11 +4,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
+@Table(name="clientes")
 public class Cliente {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -23,7 +26,12 @@ public class Cliente {
 	private String dni;
 	private Integer telefono;
 	private String alergias;
-	private String observaciones;	
+	private String observaciones;
+	
+	//Creamos el constructor vacio
+	public Cliente() {}
+	
+	//Los getter y setter no hacen falta ya que tenemos la notacion @Data
 	
 
 }
