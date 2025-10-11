@@ -18,7 +18,7 @@ import lombok.ToString;
 @ToString  //Para agregar el metodo toString
 @EqualsAndHashCode  //Esta es opcional
 @Table(name="cita_tratamiento")
-public class treatmentAppoinment {
+public class TreatmentAppoinment {
 
 	@Id//Anotacion para decirle que es un atributo id de la tabla
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)//Para el autoincremento y PK
