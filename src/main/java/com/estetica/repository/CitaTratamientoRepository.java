@@ -12,4 +12,4 @@ public interface CitaTratamientoRepository extends JpaRepository<CitaTratamiento
 	List<CitaTratamiento> findByClienteId(Long idCliente);
 	List<CitaTratamiento> finByTratamientoId(Long idTratamiento);
 
-}
+} 

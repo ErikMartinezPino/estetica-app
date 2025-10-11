@@ -12,4 +12,4 @@ public interface CitaRepository extends JpaRepository<Cita, Long>{
 	List<Cita> findByClienteId(Long idCliente);
 	List<Cita> findByFecha(String fecha);
 
-}
+} 

@@ -11,4 +11,4 @@ public interface GabineteRepository extends JpaRepository<Gabinete, Long>{
 	//Busqueda del gabinete por el numero
 	List<Gabinete> findByNumeroGabinete(Integer numeroGabinete);
 
-}
+} 

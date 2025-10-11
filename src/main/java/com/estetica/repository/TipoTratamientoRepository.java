@@ -9,5 +9,5 @@ public interface TipoTratamientoRepository extends JpaRepository<TipoTratamiento
 	
 	//Las busquedas se podran realizar por nombre del tratamiento
 	List<TipoTratamiento> findByNombreContainingIgnoreCase(String nombre);
-
+ 
 }

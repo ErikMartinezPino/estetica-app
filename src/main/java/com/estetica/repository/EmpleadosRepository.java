@@ -10,4 +10,4 @@ public interface EmpleadosRepository extends JpaRepository<Empleados, Long> {
 	//Busqueda del empleado por el nombre
 	List<Empleados> findByNombreContainingIgnoreCase(String nombre);
 
-}
+} 
