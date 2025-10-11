@@ -22,5 +22,5 @@ public class Empleados {
 	
 	//Creamos el constructor vacio
 	public Empleados() {}
-
+ 
 }

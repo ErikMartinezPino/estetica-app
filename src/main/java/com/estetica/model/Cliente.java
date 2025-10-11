@@ -15,7 +15,7 @@ public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+	 
 	private String nombre;
 	private String apellidos;
 	private String email;
@@ -33,5 +33,4 @@ public class Cliente {
 	
 	//Los getter y setter no hacen falta ya que tenemos la notacion @Data
 	
-
 }

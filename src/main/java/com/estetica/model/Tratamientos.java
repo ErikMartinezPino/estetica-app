@@ -17,6 +17,6 @@ public class Tratamientos {
 	//No se si es asi, pero creo una variable int para referencialo al tipo de tratamiento, como en la BD
 	private Integer idTipo;
 	
-	
+	 
 
 }

@@ -19,5 +19,5 @@ public class Cita {
 	private Integer idGabinete;
 	private String horaInicio;
 	private Integer duracion;
-
+ 
 }

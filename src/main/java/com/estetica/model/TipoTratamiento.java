@@ -13,5 +13,5 @@ public class TipoTratamiento {
 	
 	private String tipoTratamiento;
 	
-
+ 
 }

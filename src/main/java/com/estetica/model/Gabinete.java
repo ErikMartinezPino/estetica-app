@@ -14,3 +14,4 @@ public class Gabinete {
 	private Integer numeroGabinete;
 
 }
+ 

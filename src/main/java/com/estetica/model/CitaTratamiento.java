@@ -15,4 +15,4 @@ public class CitaTratamiento {
 	private Integer idCita;
 	private Integer idTratamiento;
 
-}
+} 
