@@ -10,8 +10,8 @@ public interface AppointmentService {
 	//Primero, metodo que devolvera una lista de objetos de tipo cita
     public List<Appointment> listAppoinment();
     
-    //Metodo que va a devolver un objeto tipo Cita, para buscarlos que recibe
-    //objeto de tipo Cita
+    //Metodo que va a devolver un objeto tipo Cita, para buscarlos recibe
+    //objeto de tipo integer asociado al id
     public Appointment searchAppoinmentId(Integer idCita);
     
     /*

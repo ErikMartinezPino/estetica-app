@@ -52,7 +52,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 		/*
 		 * Metodo con el que vamos a poder borrar una cita.
 		 */
-		appointmentRepository.delete(Appointment appointment);
+		appointmentRepository.delete(appointment);
 	}
 
 }
