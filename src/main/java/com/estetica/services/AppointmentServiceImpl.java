@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.estetica.model.Appointment;
-import com.estetica.model.Customer;
 import com.estetica.repository.AppointmentRepository;
 
 @Service

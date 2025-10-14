@@ -3,10 +3,12 @@ package com.estetica.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.estetica.model.Cabinet;
 import com.estetica.repository.CabinetRepository;
 
+@Service
 public class CabinetServiceImpl implements CabinetService{
 	
 	//Vamos a crear un atributo privado donde el tipo de dato es CabinetRepository
