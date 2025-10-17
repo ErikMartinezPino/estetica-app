@@ -1,5 +1,6 @@
 package com.estetica.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,8 +23,10 @@ public class Cabinet {
 
 	@Id // Anotacion para decirle que es un atributo id de la tabla
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // Para el autoincremento y PK
+	@Column(name="idGabinete")//Nombre de la columna en la BD
 	private Integer idCabinet;
 
+	@Column(name="numeroGabinete")//Nombre de la columna en la BD
 	private Integer numberCabinet;
 
 }

@@ -1,5 +1,6 @@
 package com.estetica.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,10 +21,14 @@ import lombok.ToString;
 @Table(name="cita_tratamiento")
 public class TreatmentAppoinment {
 
-	@Id//Anotacion para decirle que es un atributo id de la tabla
-	 @GeneratedValue(strategy = GenerationType.IDENTITY)//Para el autoincremento y PK
-	 private Integer idT_A;
-	
+	@Id // Anotacion para decirle que es un atributo id de la tabla
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Para el autoincremento y PK
+	@Column(name="idCitaTratamiento")//Nombre de la columna en la BD
+	private Integer idT_A;
+
+	@Column(name="idCita")//Nombre de la columna en la BD
 	private Integer idAppoinment;
+	
+	@Column(name="idTratamiento")//Nombre de la columna en la BD
 	private Integer idTreatment;
 }

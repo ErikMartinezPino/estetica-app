@@ -1,5 +1,6 @@
 package com.estetica.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,11 +23,19 @@ public class Employee {
 	
 	 @Id//Anotacion para decirle que es un atributo id de la tabla
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)//Para el autoincremento y PK
+	 @Column(name="idEmpleado")//Nombre de la columna en la BD
 	 private Integer idEmployee;
 	 
+	 @Column(name="nombre")//Nombre de la columna en la BD
 	 private String name;
+	 
+	 @Column(name="apellidos")//Nombre de la columna en la BD
 	 private String surname;
+	 
+	 @Column(name="email")//Nombre de la columna en la BD
 	 private String email;
+	 
+	 @Column(name="telefono")//Nombre de la columna en la BD
 	 private String mobile;
 
 }
