@@ -18,24 +18,24 @@ import lombok.ToString;
 @AllArgsConstructor  //Constructor con todos los argumentos
 @ToString  //Para agregar el metodo toString
 @EqualsAndHashCode  //Esta es opcional
-@Table(name="tratamientos")
+@Table(name="treatment")
 public class Treatment {
 	
 	 @Id//Anotacion para decirle que es un atributo id de la tabla
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)//Para el autoincremento y PK
-	 @Column(name="idTratamiento")//Nombre de la columna en la BD
+	 @Column(name="idTreatment")//Nombre de la columna en la BD
 	 private Integer idTreatment;
 	 
-	 @Column(name="nombre")//Nombre de la columna en la BD
+	 @Column(name="nameTreatment")//Nombre de la columna en la BD
 	 private String nameTreatment;
 	 
-	 @Column(name="descripcion")//Nombre de la columna en la BD
+	 @Column(name="description")//Nombre de la columna en la BD
 	 private String description;
 	 
-	 @Column(name="duracion")//Nombre de la columna en la BD
+	 @Column(name="durationTreatment")//Nombre de la columna en la BD
 	 private String durationTreatment;
 	 
 	 //Referenciamos al tipo de tratamiento por medio de su id
-	 @Column(name="idTipo")//Nombre de la columna en la BD
-	 private Integer idGuyTreatment;
+	 @Column(name="idTypeTreatment")//Nombre de la columna en la BD
+	 private Integer idTypeTreatment;
 }

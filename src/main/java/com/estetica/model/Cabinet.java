@@ -18,15 +18,15 @@ import lombok.ToString;
 @AllArgsConstructor  //Constructor con todos los argumentos
 @ToString  //Para agregar el metodo toString
 @EqualsAndHashCode  //Esta es opcional
-@Table(name="gabinetes")
+@Table(name="cabinet")
 public class Cabinet {
 
 	@Id // Anotacion para decirle que es un atributo id de la tabla
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // Para el autoincremento y PK
-	@Column(name="idGabinete")//Nombre de la columna en la BD
+	@Column(name="idCabinet")//Nombre de la columna en la BD
 	private Integer idCabinet;
 
-	@Column(name="numeroGabinete")//Nombre de la columna en la BD
+	@Column(name="numberCabinet")//Nombre de la columna en la BD
 	private Integer numberCabinet;
 
 }
