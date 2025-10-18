@@ -3,6 +3,7 @@ package com.estetica.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.estetica.model.Cabinet;
@@ -37,7 +38,15 @@ public class CabinetServiceImpl implements CabinetService{
 	
 	//Metodo para eliminar una cita
 	@Override
-	public void deleteCabinet(Cabinet cabinet){
-		cabinetRepository.delete(cabinet);
+	public void deleteCabinet(Integer idCabinet){
+		//Metodo para borrar una cita por id
+		try {
+			cabinetRepository.deleteById(idCabinet);
+			System.out.println("Se ha eliminado correctamente el gabinete con id: " + idCabinet);
+		} catch (EmptyResultDataAccessException e) {
+			System.out.println("No se ha encontrado un gabinete con ese id: " + idCabinet);
+		}catch (Exception e) {
+			System.out.println("Error al eliminar el gabinete con el id: " + e.getMessage());
+		}
 	}
 }

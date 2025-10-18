@@ -3,6 +3,7 @@ package com.estetica.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.estetica.model.Customer;
@@ -39,7 +40,7 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 	
 	@Override
-    public Customer searchCustomerId(Integer idCliente) {
+    public Customer searchCustomerId(Integer idCustomer) {
         /*
         Como no necesitamos recibir todos los datos del cliente, vamos a modificar el
         metodo en la clase CustomerServiceImpl para que ese metodo solo necesite un dato
@@ -51,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService{
         no tenga registro en la BD, regrese null y sino, pues regresa el objeto cliente
         que haya encontrado
         */
-        Customer customer = customerRepository.findById(idCliente).orElse(null);
+        Customer customer = customerRepository.findById(idCustomer).orElse(null);
         return customer;
     }
 	
@@ -65,11 +66,15 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public void deleteCustomer(Customer customer) {
-        /*
-        Para eliminar el cliente, tan sencillo como usar las herramientas de Spring tb
-        */
-        customerRepository.delete(customer);
+    public void deleteCustomer(Integer idCustomer) {
+    	try {
+			customerRepository.deleteById(idCustomer);
+			System.out.println("Se ha eliminado correctamente el cliente con id: " + idCustomer);
+		} catch (EmptyResultDataAccessException e) {
+			System.out.println("No se ha encontrado un cliente con ese id: " + idCustomer);
+		}catch (Exception e) {
+			System.out.println("Error al eliminar el cliente con el id: " + e.getMessage());
+		}
     }
 
 }

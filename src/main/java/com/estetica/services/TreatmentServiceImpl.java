@@ -3,6 +3,7 @@ package com.estetica.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.estetica.model.Treatment;
@@ -37,8 +38,15 @@ public class TreatmentServiceImpl implements TreatmentService {
 	
 	//Metodo para borrar un metodo
 	@Override
-	public void deleteTreatment(Treatment treatment) {
-		treatmentRepository.delete(treatment);
+	public void deleteTreatment(Integer idTreatment) {
+		try {
+			treatmentRepository.deleteById(idTreatment);
+			System.out.println("Se ha eliminado correctamente el tratamiento con id: " + idTreatment);
+		} catch (EmptyResultDataAccessException e) {
+			System.out.println("No se ha encontrado un tratamiento con ese id: " + idTreatment);
+		}catch (Exception e) {
+			System.out.println("Error al eliminar el tratamienti con el id: " + e.getMessage());
+		}
 	}
 
 }

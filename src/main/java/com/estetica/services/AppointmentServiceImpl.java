@@ -1,8 +1,8 @@
 package com.estetica.services;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.estetica.model.Appointment;
@@ -28,10 +28,10 @@ public class AppointmentServiceImpl implements AppointmentService{
         Como no necesitamos recibir todos los datos del cliente, vamos a modificar el
         metodo en la clase CustomerServiceImpl para que ese metodo solo necesite un dato
         de tipo Integer y que sea el idCliente. Definimos una variable de cliente, y usando
-        ña clase cleinteRepositorio vamos a llamar al metodo findById dandole el id
+        la clase clienteRepositorio vamos a llamar al metodo findById dandole el id
         del cliente que estamos buscando. Pero con este metodo vamos a recibir un dato
         de tipo Optional y entonces, para poder regresar un valor, mandamos llamar el
-        metodo orElseo para indicar que en caso de que el cliente que estamos buscando
+        metodo orElse para indicar que en caso de que el cliente que estamos buscando
         no tenga registro en la BD, regrese null y sino, pues regresa el objeto cliente
         que haya encontrado
         */
@@ -47,11 +47,18 @@ public class AppointmentServiceImpl implements AppointmentService{
 		appointmentRepository.save(appointment);		
 	}
 	
-	public void deleteAppointment(Appointment appointment) {
+	public void deleteAppointment(Integer idAppointment) {
 		/*
 		 * Metodo con el que vamos a poder borrar una cita.
 		 */
-		appointmentRepository.delete(appointment);
+		try {
+			appointmentRepository.deleteById(idAppointment);
+			System.out.println("Se ha eliminado correctamente la cita con id: " + idAppointment);
+		} catch (EmptyResultDataAccessException e) {
+			System.out.println("No se ha encontrado una cita con ese id: " + idAppointment);
+		}catch (Exception e) {
+			System.out.println("Error al eliminar la cita con el id: " + e.getMessage());
+		}
 	}
 
 }

@@ -16,6 +16,6 @@ public interface TypeTreatmentService {
 	public void saveTypeTreatment(TypeTreatment typeTreatment);
 	
 	//Metodo para borrar un tipo de tratamiento
-	public void deleteTypeTreatment(TypeTreatment typeTreatment);
+	public void deleteTypeTreatment(Integer idTypeTreatment);
 
 }

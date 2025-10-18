@@ -3,6 +3,7 @@ package com.estetica.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.estetica.model.TypeTreatment;
@@ -37,8 +38,15 @@ public class TypeTreatmentServiceImpl implements TypeTreatmentService{
 	
 	//Metodo para eliminar un tipo de tratamiento
 	@Override
-	public void deleteTypeTreatment(TypeTreatment typeTreatment) {
-		typeTreatmentRepository.delete(typeTreatment);
+	public void deleteTypeTreatment(Integer idTypeTreatment) {
+		try {
+			typeTreatmentRepository.deleteById(idTypeTreatment);
+			System.out.println("Se ha eliminado correctamente el tipo de tratamiento con id: " + idTypeTreatment);
+		} catch (EmptyResultDataAccessException e) {
+			System.out.println("No se ha encontrado un tipo de tratamiento con ese id: " + idTypeTreatment);
+		}catch (Exception e) {
+			System.out.println("Error al eliminar el tipo de tratamiento con el id: " + e.getMessage());
+		}
 	}
 
 }

@@ -16,7 +16,7 @@ public interface CustomerService {
     
     //Metodo que va a devolver un objeto tipo Cliente, para buscarlos que recibe
     //objeto de tipo Cliente
-    public Customer searchCustomerId(Integer idCliente);
+    public Customer searchCustomerId(Integer idCustomer);
     
     /*
     Metodo para guardar cliente que recibe objeto tipo Cliente. Vamos a usar el mismo
@@ -29,6 +29,6 @@ public interface CustomerService {
     public void saveCustomer(Customer customer);
     
     //Metodo para eliminar un cliente
-    public void deleteCustomer(Customer customer);
+    public void deleteCustomer(Integer idCustomer);
 
 }

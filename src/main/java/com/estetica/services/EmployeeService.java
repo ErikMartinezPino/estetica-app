@@ -16,6 +16,6 @@ public interface EmployeeService {
 	public void saveEmployee(Employee employee);
 	
 	//Metodo para eliminar un empleado
-	public void deleteEmployee(Employee employee);
+	public void deleteEmployee(Integer idEmployee);
 
 }

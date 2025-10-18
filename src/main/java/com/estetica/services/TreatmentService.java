@@ -15,6 +15,6 @@ public interface TreatmentService {
 	public void saveTreatment(Treatment treatment);
 	
 	//Metodo para eliminar un tratamiento
-	public void deleteTreatment(Treatment treatment);
+	public void deleteTreatment(Integer idTreatment);
 
 }

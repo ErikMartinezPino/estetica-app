@@ -16,5 +16,5 @@ public interface CabinetService {
 	public void saveCabinet(Cabinet cabinet);
 	
 	//Metodo para eliminar un gabinete
-	public void deleteCabinet(Cabinet cabinet);
+	public void deleteCabinet(Integer idCabinet);
 }

@@ -16,6 +16,6 @@ public interface TreatmentAppoinmentService {
 	public void saveTreatmentAppoinment(TreatmentAppoinment treatmentAppoinment);
 	
 	//Metodo para eliminar un tipo
-	public void deleteTreatmentAppoinment(TreatmentAppoinment treatmentAppoinment);
+	public void deleteTreatmentAppoinment(Integer idTreatmentAppointment);
 	
 }
