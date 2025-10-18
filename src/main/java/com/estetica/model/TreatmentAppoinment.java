@@ -18,7 +18,7 @@ import lombok.ToString;
 @AllArgsConstructor  //Constructor con todos los argumentos
 @ToString  //Para agregar el metodo toString
 @EqualsAndHashCode  //Esta es opcional
-@Table(name="treatment-appointment")
+@Table(name="treatment_appointment")
 public class TreatmentAppoinment {
 
 	
