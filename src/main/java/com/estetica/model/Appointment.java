@@ -23,8 +23,8 @@ public class Appointment {
 
 	@Id // Anotacion para decirle que es un atributo id de la tabla
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // Para el autoincremento y PK
-	@Column(name="idAppointement")//Nombre de la columna en la BD
-	private Integer idAppointement;
+	@Column(name="idAppointment")//Nombre de la columna en la BD
+	private Integer idAppointment;
 	
 	@Column(name="year")//Nombre de la columna en la BD
 	private Integer year;

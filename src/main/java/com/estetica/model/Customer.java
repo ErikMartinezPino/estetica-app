@@ -47,7 +47,7 @@ public class Customer {
 	 @Column(name="province")//Nombre de la columna en la BD
 	 private String province;
 	 
-	 @Column(name="zipCode.")//Nombre de la columna en la BD
+	 @Column(name="zipCode")//Nombre de la columna en la BD
 	 private Integer zipCode;
 	 
 	 @Column(name="dni")//Nombre de la columna en la BD
