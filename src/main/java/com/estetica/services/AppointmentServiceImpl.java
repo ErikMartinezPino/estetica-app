@@ -2,9 +2,10 @@ package com.estetica.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.estetica.exceptions.DeletionNotAllowedException;
+import com.estetica.exceptions.ResourceNotFoundException;
 import com.estetica.model.Appointment;
 import com.estetica.repository.AppointmentRepository;
 
@@ -35,7 +36,8 @@ public class AppointmentServiceImpl implements AppointmentService{
         no tenga registro en la BD, regrese null y sino, pues regresa el objeto cliente
         que haya encontrado
         */
-        Appointment appointment = appointmentRepository.findById(idAppointment).orElse(null);
+        Appointment appointment = appointmentRepository.findById(idAppointment).orElseThrow(() -> new ResourceNotFoundException("Producto"
+        		+ "no encontrado con id: " + idAppointment));
         return appointment;
     }
 	
@@ -52,12 +54,19 @@ public class AppointmentServiceImpl implements AppointmentService{
 		 * Metodo con el que vamos a poder borrar una cita.
 		 */
 		try {
-			appointmentRepository.deleteById(idAppointment);
-			System.out.println("Se ha eliminado correctamente la cita con id: " + idAppointment);
-		} catch (EmptyResultDataAccessException e) {
-			System.out.println("No se ha encontrado una cita con ese id: " + idAppointment);
-		}catch (Exception e) {
-			System.out.println("Error al eliminar la cita con el id: " + e.getMessage());
+			Appointment appointment = appointmentRepository.findById(idAppointment).orElseThrow(() -> new ResourceNotFoundException("Producto"
+					+ "no encontrado con ese id: " + idAppointment));
+			appointmentRepository.delete(appointment);
+			System.out.println("Producto eliminado correstamente, con id: " + idAppointment);
+		} catch (ResourceNotFoundException e) {
+			System.err.println("Error al eliminar: " + e.getMessage());
+			throw e;
+		} catch (DeletionNotAllowedException e) {
+			System.err.println("Error al eliminar: " + e.getMessage());
+			throw e;
+		} catch (Exception e) {
+			System.err.println("Ocurrio un error inesperado al intentar eliminar la cita con id " + idAppointment + ": " + e.getMessage());
+			throw new RuntimeException("Error interno del servidor al eliminar la cita.", e);
 		}
 	}
 
