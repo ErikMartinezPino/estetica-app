@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /*
- * Excepcion que se lanzara cuando se intente acceder o maniluar un recurso que
+ * Excepcion que se lanzara cuando se intente acceder o manipular un recurso que
  * no existe en la BD
  */
 
