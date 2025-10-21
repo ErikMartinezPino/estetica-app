@@ -57,7 +57,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 			Appointment appointment = appointmentRepository.findById(idAppointment).orElseThrow(() -> new ResourceNotFoundException("Producto"
 					+ "no encontrado con ese id: " + idAppointment));
 			appointmentRepository.delete(appointment);
-			System.out.println("Producto eliminado correstamente, con id: " + idAppointment);
+			System.out.println("Producto eliminado correctamente, con id: " + idAppointment);
 		} catch (ResourceNotFoundException e) {
 			System.err.println("Error al eliminar: " + e.getMessage());
 			throw e;
