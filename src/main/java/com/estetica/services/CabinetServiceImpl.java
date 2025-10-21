@@ -3,9 +3,10 @@ package com.estetica.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.estetica.exceptions.DeletionNotAllowedException;
+import com.estetica.exceptions.ResourceNotFoundException;
 import com.estetica.model.Cabinet;
 import com.estetica.repository.CabinetRepository;
 
@@ -26,7 +27,8 @@ public class CabinetServiceImpl implements CabinetService{
 	//Vamos con la busqueda de un gabinete por su id
 	@Override
 	public Cabinet searchCabinet(Integer idCabinet) {
-		Cabinet cabinet = cabinetRepository.findById(idCabinet).orElse(null);
+		Cabinet cabinet = cabinetRepository.findById(idCabinet).orElseThrow(() -> new ResourceNotFoundException("Gabinete con id"
+				+ idCabinet + "no encontrado."));
 		return cabinet;
 	}
 	
@@ -41,12 +43,19 @@ public class CabinetServiceImpl implements CabinetService{
 	public void deleteCabinet(Integer idCabinet){
 		//Metodo para borrar una cita por id
 		try {
-			cabinetRepository.deleteById(idCabinet);
-			System.out.println("Se ha eliminado correctamente el gabinete con id: " + idCabinet);
-		} catch (EmptyResultDataAccessException e) {
-			System.out.println("No se ha encontrado un gabinete con ese id: " + idCabinet);
-		}catch (Exception e) {
-			System.out.println("Error al eliminar el gabinete con el id: " + e.getMessage());
+			Cabinet cabinet = cabinetRepository.findById(idCabinet).orElseThrow(() -> new ResourceNotFoundException("Gabinete"
+					+ "no encontrado con ese id: " + idCabinet));
+			cabinetRepository.delete(cabinet);
+			System.out.println("Gabinete eliminado correctamente, con id: " + idCabinet);
+		} catch (ResourceNotFoundException e) {
+			System.err.println("Error al eliminar: " + e.getMessage());
+			throw e;
+		} catch (DeletionNotAllowedException e) {
+			System.err.println("Error al eliminar: " + e.getMessage());
+			throw e;
+		} catch (Exception e) {
+			System.err.println("Ocurrio un error inesperado al intentar eliminar el gabinete con id " + idCabinet + ": " + e.getMessage());
+			throw new RuntimeException("Error interno del servidor al eliminar el gabinete.", e);
 		}
 	}
 }

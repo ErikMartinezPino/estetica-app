@@ -3,9 +3,10 @@ package com.estetica.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.estetica.exceptions.DeletionNotAllowedException;
+import com.estetica.exceptions.ResourceNotFoundException;
 import com.estetica.model.TypeTreatment;
 import com.estetica.repository.TypeTreatmentRepository;
 
@@ -26,7 +27,8 @@ public class TypeTreatmentServiceImpl implements TypeTreatmentService{
 	//Metodo para buscar un tipo de tratamiento
 	@Override
 	public TypeTreatment searchTypeTreatment(Integer idTypeTreatment) {
-		TypeTreatment typeTreatment = typeTreatmentRepository.findById(idTypeTreatment).orElse(null);
+		TypeTreatment typeTreatment = typeTreatmentRepository.findById(idTypeTreatment).orElseThrow(() -> new ResourceNotFoundException("Tipo de tratamiento"
+				+ "con id " + idTypeTreatment + " no encontrado."));
 		return typeTreatment;
 	}
 	
@@ -40,12 +42,19 @@ public class TypeTreatmentServiceImpl implements TypeTreatmentService{
 	@Override
 	public void deleteTypeTreatment(Integer idTypeTreatment) {
 		try {
-			typeTreatmentRepository.deleteById(idTypeTreatment);
-			System.out.println("Se ha eliminado correctamente el tipo de tratamiento con id: " + idTypeTreatment);
-		} catch (EmptyResultDataAccessException e) {
-			System.out.println("No se ha encontrado un tipo de tratamiento con ese id: " + idTypeTreatment);
-		}catch (Exception e) {
-			System.out.println("Error al eliminar el tipo de tratamiento con el id: " + e.getMessage());
+			TypeTreatment typeTreatment = typeTreatmentRepository.findById(idTypeTreatment).orElseThrow(() -> new ResourceNotFoundException("Tipo de tratamiento"
+					+ "no encontrado con ese id: " + idTypeTreatment));
+			typeTreatmentRepository.delete(typeTreatment);
+			System.out.println("Producto eliminado correctamente, con id: " + idTypeTreatment);
+		} catch (ResourceNotFoundException e) {
+			System.err.println("Error al eliminar: " + e.getMessage());
+			throw e;
+		} catch (DeletionNotAllowedException e) {
+			System.err.println("Error al eliminar: " + e.getMessage());
+			throw e;
+		} catch (Exception e) {
+			System.err.println("Ocurrio un error inesperado al intentar eliminar el tipo de tratamiento con id " + idTypeTreatment + ": " + e.getMessage());
+			throw new RuntimeException("Error interno del servidor al eliminar el tipo de tratamiento.", e);
 		}
 	}
 

@@ -3,9 +3,10 @@ package com.estetica.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.estetica.exceptions.DeletionNotAllowedException;
+import com.estetica.exceptions.ResourceNotFoundException;
 import com.estetica.model.Treatment;
 import com.estetica.repository.TreatmentRepository;
 
@@ -26,7 +27,8 @@ public class TreatmentServiceImpl implements TreatmentService {
 	//Busqueda de un tratamiento por su id
 	@Override
 	public Treatment searchTreatment(Integer idTreatment) {
-		Treatment treatment = treatmentRepository.findById(idTreatment).orElse(null);
+		Treatment treatment = treatmentRepository.findById(idTreatment).orElseThrow(() -> new ResourceNotFoundException("Tratamiento"
+				+ "con id " + idTreatment + " no encontrado."));
 		return treatment;
 	}
 	
@@ -40,12 +42,19 @@ public class TreatmentServiceImpl implements TreatmentService {
 	@Override
 	public void deleteTreatment(Integer idTreatment) {
 		try {
-			treatmentRepository.deleteById(idTreatment);
-			System.out.println("Se ha eliminado correctamente el tratamiento con id: " + idTreatment);
-		} catch (EmptyResultDataAccessException e) {
-			System.out.println("No se ha encontrado un tratamiento con ese id: " + idTreatment);
-		}catch (Exception e) {
-			System.out.println("Error al eliminar el tratamienti con el id: " + e.getMessage());
+			Treatment treatment = treatmentRepository.findById(idTreatment).orElseThrow(() -> new ResourceNotFoundException("Tratamiento"
+					+ "no encontrado con ese id: " + idTreatment));
+			treatmentRepository.delete(treatment);
+			System.out.println("Tratamiento eliminado correctamente, con id: " + idTreatment);
+		} catch (ResourceNotFoundException e) {
+			System.err.println("Error al eliminar: " + e.getMessage());
+			throw e;
+		} catch (DeletionNotAllowedException e) {
+			System.err.println("Error al eliminar: " + e.getMessage());
+			throw e;
+		} catch (Exception e) {
+			System.err.println("Ocurrio un error inesperado al intentar eliminar el tratamiento con id " + idTreatment + ": " + e.getMessage());
+			throw new RuntimeException("Error interno del servidor al eliminar el tratamiento.", e);
 		}
 	}
 

@@ -3,9 +3,10 @@ package com.estetica.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.estetica.exceptions.DeletionNotAllowedException;
+import com.estetica.exceptions.ResourceNotFoundException;
 import com.estetica.model.TreatmentAppoinment;
 import com.estetica.repository.TreatmentAppoinmentRepository;
 
@@ -26,7 +27,8 @@ public class TreatmentAppoinmentServiceImpl implements TreatmentAppoinmentServic
 	//Busqueda de un tratamiento/cita por id
 	@Override
 	public TreatmentAppoinment searchTreatmentAppoinment(Integer idTreatmentAppoinment) {
-		TreatmentAppoinment treatmentAppoinment = treatmentAppoinmentRepository.findById(idTreatmentAppoinment).orElse(null);
+		TreatmentAppoinment treatmentAppoinment = treatmentAppoinmentRepository.findById(idTreatmentAppoinment).orElseThrow(() -> new ResourceNotFoundException("Tratamiento"
+				+ " de cita con id " + idTreatmentAppoinment + " no encontrado"));
 		return treatmentAppoinment;
 	}
 	
@@ -41,12 +43,19 @@ public class TreatmentAppoinmentServiceImpl implements TreatmentAppoinmentServic
 	@Override
 	public void deleteTreatmentAppoinment(Integer idTreatmentAppoinment) {
 		try {
-			treatmentAppoinmentRepository.deleteById(idTreatmentAppoinment);
-			System.out.println("Se ha eliminado correctamente la cita/tratamiento con id: " + idTreatmentAppoinment);
-		} catch (EmptyResultDataAccessException e) {
-			System.out.println("No se ha encontrado una cita/tratamiento con ese id: " + idTreatmentAppoinment);
-		}catch (Exception e) {
-			System.out.println("Error al eliminar la cita/tratamiento con el id: " + e.getMessage());
+			TreatmentAppoinment treatmentAppoinment = treatmentAppoinmentRepository.findById(idTreatmentAppoinment).orElseThrow(() -> new ResourceNotFoundException("Tratamiento de cita"
+					+ "no encontrado con ese id: " + idTreatmentAppoinment));
+			treatmentAppoinmentRepository.delete(treatmentAppoinment);
+			System.out.println("Tratamiento de cita eliminado correctamente, con id: " + idTreatmentAppoinment);
+		} catch (ResourceNotFoundException e) {
+			System.err.println("Error al eliminar: " + e.getMessage());
+			throw e;
+		} catch (DeletionNotAllowedException e) {
+			System.err.println("Error al eliminar: " + e.getMessage());
+			throw e;
+		} catch (Exception e) {
+			System.err.println("Ocurrio un error inesperado al intentar eliminar el tratamiento de cita con id " + idTreatmentAppoinment + ": " + e.getMessage());
+			throw new RuntimeException("Error interno del servidor al eliminar el tratamiento de la cita.", e);
 		}
 	}
 

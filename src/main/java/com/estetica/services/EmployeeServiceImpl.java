@@ -3,9 +3,10 @@ package com.estetica.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.estetica.exceptions.DeletionNotAllowedException;
+import com.estetica.exceptions.ResourceNotFoundException;
 import com.estetica.model.Employee;
 import com.estetica.repository.EmployeeRepository;
 
@@ -26,7 +27,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 	//Busqueda de un empleado por el id
 	@Override
 	public Employee searchEmployee(Integer idEmployee) {
-		Employee employee = employeeRepository.findById(idEmployee).orElse(null);
+		Employee employee = employeeRepository.findById(idEmployee).orElseThrow(() -> new ResourceNotFoundException("Empleado"
+				+ "con id " + idEmployee + " no encontrado."));
 		return employee;
 	}
 	
@@ -40,12 +42,19 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Override
 	public void deleteEmployee(Integer idEmployee) {
 		try {
-			employeeRepository.deleteById(idEmployee);
-			System.out.println("Se ha eliminado correctamente el empleado con id: " + idEmployee);
-		} catch (EmptyResultDataAccessException e) {
-			System.out.println("No se ha encontrado un empleado con ese id: " + idEmployee);
-		}catch (Exception e) {
-			System.out.println("Error al eliminar el empleado con el id: " + e.getMessage());
+			Employee employee = employeeRepository.findById(idEmployee).orElseThrow(() -> new ResourceNotFoundException("Empleado"
+					+ "no encontrado con ese id: " + idEmployee));
+			employeeRepository.delete(employee);
+			System.out.println("Empleado eliminado correctamente, con id: " + idEmployee);
+		} catch (ResourceNotFoundException e) {
+			System.err.println("Error al eliminar: " + e.getMessage());
+			throw e;
+		} catch (DeletionNotAllowedException e) {
+			System.err.println("Error al eliminar: " + e.getMessage());
+			throw e;
+		} catch (Exception e) {
+			System.err.println("Ocurrio un error inesperado al intentar eliminar el empleado con id " + idEmployee + ": " + e.getMessage());
+			throw new RuntimeException("Error interno del servidor al eliminar el empleado.", e);
 		}
 	}
 
