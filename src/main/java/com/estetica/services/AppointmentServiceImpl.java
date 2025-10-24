@@ -17,7 +17,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 	private AppointmentRepository appointmentRepository;
 	
 	@Override
-	public List<Appointment> listAppoinment(){
+	public List<Appointment> listAppointment(){
 		//Primero creamos la lista de citas
 		List<Appointment> appointments = appointmentRepository.findAll();
 		return appointments;

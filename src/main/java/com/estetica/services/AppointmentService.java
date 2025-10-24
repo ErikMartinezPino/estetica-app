@@ -8,7 +8,7 @@ import com.estetica.model.Appointment;
 public interface AppointmentService {
 	
 	//Primero, metodo que devolvera una lista de objetos de tipo cita
-    public List<Appointment> listAppoinment();
+    public List<Appointment> listAppointment();
     
     //Metodo que va a devolver un objeto tipo Cita, para buscarlos recibe
     //objeto de tipo integer asociado al id
