@@ -10,7 +10,7 @@ public interface CabinetService {
 	public List<Cabinet> listCabinet();
 	
 	//Metodo para buscar un gabinete
-	public Cabinet searchCabinet(Integer idCabinet);
+	public Cabinet searchCabinetId(Integer idCabinet);
 	
 	//Metodo para guardar un gabinete
 	public void saveCabinet(Cabinet cabinet);

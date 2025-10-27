@@ -24,7 +24,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 	}
 	
 	@Override
-    public Appointment searchAppoinmentId(Integer idAppointment) {
+    public Appointment searchAppointmentId(Integer idAppointment) {
         /*
         Como no necesitamos recibir todos los datos del cliente, vamos a modificar el
         metodo en la clase CustomerServiceImpl para que ese metodo solo necesite un dato

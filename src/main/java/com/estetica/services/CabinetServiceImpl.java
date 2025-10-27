@@ -1,11 +1,11 @@
 package com.estetica.services;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.estetica.exceptions.DeletionNotAllowedException;
+import com.estetica.exceptions.FailedSaveException;
 import com.estetica.exceptions.ResourceNotFoundException;
 import com.estetica.model.Cabinet;
 import com.estetica.repository.CabinetRepository;
@@ -26,7 +26,7 @@ public class CabinetServiceImpl implements CabinetService{
 	
 	//Vamos con la busqueda de un gabinete por su id
 	@Override
-	public Cabinet searchCabinet(Integer idCabinet) {
+	public Cabinet searchCabinetId(Integer idCabinet) {
 		Cabinet cabinet = cabinetRepository.findById(idCabinet).orElseThrow(() -> new ResourceNotFoundException("Gabinete con id"
 				+ idCabinet + "no encontrado."));
 		return cabinet;
@@ -35,7 +35,18 @@ public class CabinetServiceImpl implements CabinetService{
 	//Metodo para guardar los gabinetes
 	@Override
 	public void saveCabinet(Cabinet cabinet) {
-		cabinetRepository.save(cabinet);
+		//Metodo para guardar una cita con captura de excepcion
+		try {
+			cabinetRepository.save(cabinet);
+			System.out.println("Gabinete guardado correctamente");
+		} catch (FailedSaveException e) {
+			System.err.println("Error al guardar el gabinete: " + e.getMessage());
+			throw e;
+		}
+		catch (Exception e) {
+			System.err.println("Ocurrio un error inesperado al intentar guardar el gabinete." + e.getMessage());
+			throw new FailedSaveException("Error interno del servidor al guardar el gabinete.", e);
+		}
 	}
 	
 	//Metodo para eliminar una cita

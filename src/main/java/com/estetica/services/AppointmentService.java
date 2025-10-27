@@ -12,7 +12,7 @@ public interface AppointmentService {
     
     //Metodo que va a devolver un objeto tipo Cita, para buscarlos recibe
     //objeto de tipo integer asociado al id
-    public Appointment searchAppoinmentId(Integer idAppointment);
+    public Appointment searchAppointmentId(Integer idAppointment);
     
     /*
     Metodo para guardar cita que recibe objeto tipo Cita. Vamos a usar el mismo

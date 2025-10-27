@@ -1,8 +1,8 @@
 package com.estetica;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,9 +16,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 import com.estetica.exceptions.DeletionNotAllowedException;
+import com.estetica.exceptions.ResourceNotFoundException;
 import com.estetica.model.Appointment;
 import com.estetica.repository.AppointmentRepository;
 import com.estetica.services.AppointmentServiceImpl;
@@ -41,7 +41,10 @@ class AppointmentServiceImplTest {
 	
 	/*
 	 * Esta anotacion indica que se tiene que ejecutar antes de cada test. Lo que hace openMocks
-	 * es decirle a Mockito que coja todas las anotaciones Mock y Injec y las prepare para usarlas
+	 * es decirle a Mockito que coja todas las anotaciones Mock y Injec y las prepare para usarlas.
+	 * Usamos la palabra this para hacerle referencia a la instancia actual de la clase, a esta clase
+	 * test que estamos haciendo. Le esta diciendo que busque en esta clase las anotaciones Mock y
+	 * Inject y las use
 	 */
 	@BeforeEach
 	void setUp() {
@@ -64,7 +67,7 @@ class AppointmentServiceImplTest {
 		 * con las dos citas que creamos anteriormente. Al simularlo, evitamos que se conecte a
 		 * la BD real.
 		 */
-		when(appointmentRepository.findAll()).thenReturn(Arrays.asList(a1,a2));
+		when(appointmentRepository.findAll()).thenReturn(Arrays.asList(a1, a2));
 		
 		/*
 		 * Aqui creamos una lista de objetos de tipo Appointmen, le ponemos de nombre result y le
@@ -76,6 +79,8 @@ class AppointmentServiceImplTest {
 		
 		//Este verifica que el resultado no sea nulo
 		assertNotNull(result);
+		//Verificamos que el tamaño de la lista es el correcto
+		assertEquals(2, result.size());
 		//Aqui se comprueba que el metodo findAll fue llamado solo una vez
 		verify(appointmentRepository).findAll();
 	}
@@ -89,7 +94,10 @@ class AppointmentServiceImplTest {
 		Appointment appointment = new Appointment();
 		/*
 		 * Aqui le decimos que CUANDO se llame al metodo findById(1), este devuelva un optional
-		 * con la cita que creamos antes.
+		 * con la cita que creamos antes. Aqui la palabra optional hace referencia a crear un
+		 * conteneder que puede contener datos o estar vacio. En este caso tiene dentro una
+		 * cita. Con esto nos quitamos de tener que comprobar si tiene datos, si esta vacio, si
+		 * es nulo...todo va incluido dentro
 		 */
 		when(appointmentRepository.findById(1)).thenReturn(Optional.of(appointment));
 		
@@ -98,10 +106,12 @@ class AppointmentServiceImplTest {
 		 * real search de la clase AppointmentServiceImpl. De nuevo como antes, internamente
 		 * va a usar el metodo de la clase repopsitory.
 		 */
-		Appointment result = appointmentServiceImpl.searchAppoinmentId(1);
+		Appointment result = appointmentServiceImpl.searchAppointmentId(1);
 		
 		//Verifica que el resultado no sea nulo
 		assertNotNull(result);
+		//Verificamos que el resultado obtenido es el mismo objeto
+		assertEquals(appointment, result);
 		//Verifica que el metodo fue llamado con el id(1)
 		verify(appointmentRepository).findById(1);
 	}
@@ -117,7 +127,7 @@ class AppointmentServiceImplTest {
 		
 		//Aqui se verifica que al llamar al metodo con el id 99, se llama a la excepcion
 		assertThrows(ResourceNotFoundException.class, () ->{
-			appointmentServiceImpl.searchAppoinmentId(99);
+			appointmentServiceImpl.searchAppointmentId(99);
 		});
 	}
 	
