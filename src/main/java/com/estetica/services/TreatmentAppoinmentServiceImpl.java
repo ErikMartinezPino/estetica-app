@@ -17,7 +17,7 @@ public class TreatmentAppoinmentServiceImpl implements TreatmentAppoinmentServic
 	@Autowired
 	private TreatmentAppoinmentRepository treatmentAppoinmentRepository;
 	
-	//Lista con los tipos de tratamiento
+	//Lista con los tipos de tratamientos
 	@Override
 	public List<TreatmentAppoinment> listTreatmentAppoinment(){
 		List<TreatmentAppoinment> treatmentAppoinment = treatmentAppoinmentRepository.findAll();

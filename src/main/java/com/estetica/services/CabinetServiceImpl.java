@@ -49,10 +49,10 @@ public class CabinetServiceImpl implements CabinetService{
 		}
 	}
 	
-	//Metodo para eliminar una cita
+	//Metodo para eliminar un gabinete
 	@Override
 	public void deleteCabinet(Integer idCabinet){
-		//Metodo para borrar una cita por id
+		//Metodo para borrar un gabinete por id
 		try {
 			Cabinet cabinet = cabinetRepository.findById(idCabinet).orElseThrow(() -> new ResourceNotFoundException("Gabinete"
 					+ "no encontrado con ese id: " + idCabinet));

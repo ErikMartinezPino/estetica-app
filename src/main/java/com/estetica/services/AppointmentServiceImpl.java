@@ -27,23 +27,23 @@ public class AppointmentServiceImpl implements AppointmentService{
     public Appointment searchAppointmentId(Integer idAppointment) {
         /*
         Como no necesitamos recibir todos los datos del cliente, vamos a modificar el
-        metodo en la clase CustomerServiceImpl para que ese metodo solo necesite un dato
-        de tipo Integer y que sea el idCliente. Definimos una variable de cliente, y usando
-        la clase clienteRepositorio vamos a llamar al metodo findById dandole el id
-        del cliente que estamos buscando. Pero con este metodo vamos a recibir un dato
+        metodo en la clase AppointmentServiceImpl para que ese metodo solo necesite un dato
+        de tipo Integer y que sea el idCliente. Definimos una variable de cita, y usando
+        la clase citaRepositorio vamos a llamar al metodo findById dandole el id
+        de la cita que estamos buscando. Pero con este metodo vamos a recibir un dato
         de tipo Optional y entonces, para poder regresar un valor, mandamos llamar el
-        metodo orElse para indicar que en caso de que el cliente que estamos buscando
-        no tenga registro en la BD, regrese null y sino, pues regresa el objeto cliente
+        metodo orElse para indicar que en caso de que la cita que estamos buscando
+        no tenga registro en la BD, regrese null y sino, pues regresa el objeto cita
         que haya encontrado
         */
-        Appointment appointment = appointmentRepository.findById(idAppointment).orElseThrow(() -> new ResourceNotFoundException("Producto"
-        		+ "no encontrado con id: " + idAppointment));
+        Appointment appointment = appointmentRepository.findById(idAppointment).orElseThrow(() -> new ResourceNotFoundException("Cita"
+        		+ "no encontrada con id: " + idAppointment));
         return appointment;
     }
 	
 	public void saveAppointment(Appointment appointment) {
 		/*
-        Este metodo tb es muy sencillo con Spring. Vamos a usar la clase clienteRepositorio
+        Este metodo tb es muy sencillo con Spring. Vamos a usar la clase citaRepositorio
         y usamos el metodo save
         */
 		appointmentRepository.save(appointment);		
@@ -54,10 +54,10 @@ public class AppointmentServiceImpl implements AppointmentService{
 		 * Metodo con el que vamos a poder borrar una cita.
 		 */
 		try {
-			Appointment appointment = appointmentRepository.findById(idAppointment).orElseThrow(() -> new ResourceNotFoundException("Producto"
-					+ "no encontrado con ese id: " + idAppointment));
+			Appointment appointment = appointmentRepository.findById(idAppointment).orElseThrow(() -> new ResourceNotFoundException("Cita"
+					+ "no encontrada con ese id: " + idAppointment));
 			appointmentRepository.delete(appointment);
-			System.out.println("Producto eliminado correctamente, con id: " + idAppointment);
+			System.out.println("Cita eliminada correctamente, con id: " + idAppointment);
 		} catch (ResourceNotFoundException e) {
 			System.err.println("Error al eliminar: " + e.getMessage());
 			throw e;
