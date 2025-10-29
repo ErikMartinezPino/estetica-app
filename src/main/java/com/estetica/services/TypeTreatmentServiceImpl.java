@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.estetica.exceptions.DeletionNotAllowedException;
+import com.estetica.exceptions.FailedSaveException;
 import com.estetica.exceptions.ResourceNotFoundException;
 import com.estetica.model.TypeTreatment;
 import com.estetica.repository.TypeTreatmentRepository;
@@ -35,7 +36,15 @@ public class TypeTreatmentServiceImpl implements TypeTreatmentService{
 	//Metodo para guardar un tipo de tratamiento
 	@Override
 	public void saveTypeTreatment(TypeTreatment typeTreatment) {
-		typeTreatmentRepository.save(typeTreatment);
+		try {
+			typeTreatmentRepository.save(typeTreatment);
+			System.out.println("Tipo de tratamiento guardado correctamente");
+		} catch (FailedSaveException e) {
+			System.err.println("Error al guardar el tipo de tratamiento: " + e.getMessage());
+		} catch (Exception e) {
+			System.err.println("Ocurrio un error inesperado al intentar guardar el tipo de tratamiento." + e.getMessage());
+			throw new FailedSaveException("Error interno del servidor al guardar el tipo de tratamiento." + e);
+		}
 	}
 	
 	//Metodo para eliminar un tipo de tratamiento

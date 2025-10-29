@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.estetica.exceptions.DeletionNotAllowedException;
+import com.estetica.exceptions.FailedSaveException;
 import com.estetica.exceptions.ResourceNotFoundException;
 import com.estetica.model.TreatmentAppoinment;
 import com.estetica.repository.TreatmentAppoinmentRepository;
 
 @Service
-public class TreatmentAppoinmentServiceImpl implements TreatmentAppoinmentService{
+public class TreatmentAppointmentServiceImpl implements TreatmentAppointmentService{
 	
 	//Creamos el objeto del tipo de la clase
 	@Autowired
@@ -36,7 +37,15 @@ public class TreatmentAppoinmentServiceImpl implements TreatmentAppoinmentServic
 	//Metodo para guardar tratamiento/cita
 	@Override
 	public void saveTreatmentAppoinment(TreatmentAppoinment treatmentAppoinment) {
-		treatmentAppoinmentRepository.save(treatmentAppoinment);
+		try {
+			treatmentAppoinmentRepository.save(treatmentAppoinment);
+			System.out.println("Tratamientos de citas no guardados correctamente");
+		} catch (FailedSaveException e) {
+			System.err.println("Error al guardar el tratamiento de la cita: " + e.getMessage());
+		} catch (Exception e) {
+			System.err.println("Ocurrio un error inesperado al intentar guardar el tratamiento de la cita." + e.getMessage());
+			throw new FailedSaveException("Error interno del servidor al guardar el tratamiento de la cita." + e);
+		}
 	}
 	
 	//Metodo para eliminar un tratamiento/cita

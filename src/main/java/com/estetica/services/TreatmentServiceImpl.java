@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.estetica.exceptions.DeletionNotAllowedException;
+import com.estetica.exceptions.FailedSaveException;
 import com.estetica.exceptions.ResourceNotFoundException;
 import com.estetica.model.Treatment;
 import com.estetica.repository.TreatmentRepository;
@@ -35,7 +36,15 @@ public class TreatmentServiceImpl implements TreatmentService {
 	//Metodo para guardar un tratamiento
 	@Override
 	public void saveTreatment(Treatment treatment) {
-		treatmentRepository.save(treatment);
+		try {
+			treatmentRepository.save(treatment);
+			System.out.println("Tratamiento guardado correctamente");
+		} catch (FailedSaveException e) {
+			System.err.println("Error al guardar el tratamiento: " + e.getMessage());
+		} catch (Exception e) {
+			System.err.println("Ocurrio un error inesperado al intentar guardar el tratamiento." + e.getMessage());
+			throw new FailedSaveException("Error interno del servidor al guardar el tratamiento." + e);
+		}
 	}
 	
 	//Metodo para borrar un metodo

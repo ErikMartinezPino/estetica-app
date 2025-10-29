@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.estetica.exceptions.DeletionNotAllowedException;
+import com.estetica.exceptions.FailedSaveException;
 import com.estetica.exceptions.ResourceNotFoundException;
 import com.estetica.model.Employee;
 import com.estetica.repository.EmployeeRepository;
+
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
@@ -35,7 +37,16 @@ public class EmployeeServiceImpl implements EmployeeService{
 	//Metodo para guardar un empleado
 	@Override
 	public void saveEmployee(Employee employee) {
-		employeeRepository.save(employee);
+		try {
+			employeeRepository.save(employee);
+			System.out.println("Empleado guardado correctamente");
+		} catch (FailedSaveException e) {
+			System.err.println("Error al guardar el empleado: " + e.getMessage());
+		} catch (Exception e) {
+			System.err.println("Ocurrio un error inesperado al intentar guardar el empleado." + e.getMessage());
+			throw new FailedSaveException("Error interno del servidor al guardar el empleado." + e);
+		}
+		
 	}
 	
 	//Metodo para eliminar un empleado

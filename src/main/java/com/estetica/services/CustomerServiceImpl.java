@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.estetica.exceptions.DeletionNotAllowedException;
+import com.estetica.exceptions.FailedSaveException;
 import com.estetica.exceptions.ResourceNotFoundException;
 import com.estetica.model.Customer;
 import com.estetica.repository.CustomerRepository;
@@ -60,11 +61,17 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	@Override
     public void saveCustomer(Customer customer) {
-        /*
-        Este metodo tb es muy sencillo con Spring. Vamos a usar la clase clienteRepositorio
-        y usamos el metodo save
-        */
-        customerRepository.save(customer);
+		//Vamos a crear el metodo para guardar, capturando excepciones
+		try {
+			customerRepository.save(customer);
+			System.out.println("Cliente guardado correctamente");
+		} catch (FailedSaveException e) {
+			System.err.println("Error al guardar el cliente: " + e.getMessage());
+			throw e;
+		} catch (Exception e) {
+			System.err.println("Ocurrio un error inesperado al intentar guardar el cliente." + e.getMessage());
+			throw new FailedSaveException("Error interno del servidor al guardar el cliente.", e);
+		}
     }
 
     @Override

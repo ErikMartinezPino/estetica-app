@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.estetica.model.TreatmentAppoinment;
 
-public interface TreatmentAppoinmentService {
+public interface TreatmentAppointmentService {
 	
 	//Creamos la lista que se devolvera con los tipos de tratamiento
 	public List<TreatmentAppoinment> listTreatmentAppoinment();

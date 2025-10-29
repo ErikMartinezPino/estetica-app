@@ -42,8 +42,7 @@ public class CabinetServiceImpl implements CabinetService{
 		} catch (FailedSaveException e) {
 			System.err.println("Error al guardar el gabinete: " + e.getMessage());
 			throw e;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println("Ocurrio un error inesperado al intentar guardar el gabinete." + e.getMessage());
 			throw new FailedSaveException("Error interno del servidor al guardar el gabinete.", e);
 		}

@@ -3,7 +3,6 @@ package com.estetica;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -64,6 +63,7 @@ class CabinetServiceImplTest {
 		//Verificamos que el metodo sea llamado solo una vez
 		verify(cabinetRepository).findAll();
 	}
+	
 	 //Test para metodo de buscar por id
 	@Test
 	void testSearchCabinetIdReturnCabinet() {
@@ -78,7 +78,7 @@ class CabinetServiceImplTest {
 		//Verificamos que no sea nulo
 		assertNotNull(resultCabinet);
 		//Verificamos que el resultado obtenido es el mismo objeto
-		assertEquals(cabinet, resultCabinet);;
+		assertEquals(cabinet, resultCabinet);
 		//Verifiacmos que la llamada sea una vez
 		verify(cabinetRepository).findById(1);
 	}
@@ -118,7 +118,7 @@ class CabinetServiceImplTest {
 		//Simulamos el error
 		when(cabinetRepository.save(cabinet)).thenThrow(new RuntimeException("Error en la base de datos."));
 		
-		//Verificamos que se lance nuestra excepcion, creamos un objeto de la clase excepcion nuestra con el error
+		//Verificamos que se lance nuestra excepcion
 		assertThrows(FailedSaveException.class, () -> {
 		    cabinetServiceImpl.saveCabinet(cabinet);
 		});
